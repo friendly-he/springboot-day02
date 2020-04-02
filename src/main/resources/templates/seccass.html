@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>访问动态页面成功了</h3>
+<div th:text="${hahah}"></div>
+<div th:utext="${hello}"></div>
+<h3 th:text="${user}" th:each="user: ${hehe}"></h3>
+<h3>
+    <span th:text="${user}" th:each="user:${hehe}"></span>
+</h3>
+<p >
+    Today is: <span th:text="${#calendars.format(today,'dd MMMM yyyy')}">13 May 2011</span>
+</p>
+
+
+</body>
+</html>

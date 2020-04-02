@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+    <div th:replace="~{bar/bar::title}"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div th:replace="bar/bar::#lift(activeUri='emps')"></div>
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<h2>Section title</h2>
+                        <form class="form-horizontal" th:action="@{/emp}" method="post">
+
+<!--                            <input type="hidden" name="_method" value="put" th:if="toedit!=null">-->
+
+                            <div class="form-group">
+                                <label for="inputid" class="col-sm-2 control-label">id</label>
+                                <div class="col-sm-10">
+                                    <input type="text" th:value="${toedit!=null}?${toedit.id}" class="form-control" id="inputid" name="id" placeholder="id">
+                             </div>
+                            <div class="form-group">
+                                <label for="Email" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" th:value="${toedit!=null}?${toedit.email}" class="form-control" id="Email" name="email" placeholder="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">lastname</label>
+                                <div class="col-sm-10">
+                                    <input type="username" th:value="${toedit!=null}?${toedit.lastName}" class="form-control" id="lastname" name="lastName" placeholder="lastname">
+                                </div>
+                            </div>
+                                <div style="padding-left: 10px">
+                                <label class="radio-inline" style=";padding-top: 5px;padding-right: 19px">
+                                    <input type="radio" name="gender" id="inlineRadio1" value="1" th:checked="${toedit!=null}?${toedit.gender==1}"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" id="gender" value="0" th:checked="${toedit!=null}?${toedit.gender==0}"> 女
+                                </label>
+                                </div>
+                                <!-- Single button -->
+                                <div class="form-group">
+                                 <label class="col-sm-2 control-label">department</label>
+                                    <select class="form-control" name ="department.id" >
+                                        <option th:selected="${toedit!=null}?${dept.id==toedit.department.id}" th:value="${dept.id}" th:each="dept:${depts}" th:text="${dept.departmentName}">1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="birth" class="col-sm-2 control-label">birth</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" th:value="${toedit!=null}?${#dates.format(toedit.birth,'yyyy-MM-dd HH-mm-ss')}" class="form-control" name="birth" id="birth" placeholder="birth">
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" th:text="${toedit!=null}?'修改':'添加'" class="btn btn-default">添加</button>
+                                </div>
+                            </div>
+                        </form>
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/asserts/js/popper.min.js}"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/asserts/js/bootstrap.min.js}"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" src="asserts/js/Chart.min.js" th:src="@{/asserts/js/Chart.min.js}"></script>
+		<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+					datasets: [{
+						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+						lineTension: 0,
+						backgroundColor: 'transparent',
+						borderColor: '#007bff',
+						borderWidth: 4,
+						pointBackgroundColor: '#007bff'
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: false
+							}
+						}]
+					},
+					legend: {
+						display: false,
+					}
+				}
+			});
+		</script>
+
+	</body>
+
+</html>
