@@ -36,8 +36,6 @@ public class listsController {
     public String add(Employee employee){
         System.out.println(employee);
         employeeDao.save(employee);
-
-
         return "redirect:/emps";
     }
     //用户属性添加到model
@@ -59,7 +57,7 @@ public class listsController {
         return "add";
     }
 
-@PutMapping("/emp")
+    @PutMapping("/emp")
     public String toedint2(Employee employee){
 
         employeeDao.save(employee);
